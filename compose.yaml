@@ -1,1 +1,10 @@
 services:
+  server:
+    container_name: ERServer
+    build:
+      context: escaperoomserver
+      dockerfile: Dockerfile
+    image: server:latest
+    ports:
+      - 18080:8080
+
