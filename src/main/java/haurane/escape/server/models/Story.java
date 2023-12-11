@@ -6,12 +6,13 @@ import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
+import org.springframework.data.neo4j.core.support.UUIDStringGenerator;
 
 @Node
 public class Story {
     @Id
-    @GeneratedValue()
-    private String id;
+    @GeneratedValue(generatorClass = UUIDStringGenerator.class)
+    private String uuid;
 
     @Getter
     @Setter

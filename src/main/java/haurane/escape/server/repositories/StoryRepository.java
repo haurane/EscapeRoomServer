@@ -1,5 +1,6 @@
 package haurane.escape.server.repositories;
 
+import haurane.escape.server.DTO.StoryDTO;
 import haurane.escape.server.models.Story;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -11,5 +12,6 @@ import java.util.List;
 @Repository
 public interface StoryRepository extends PagingAndSortingRepository<Story, String>, CrudRepository<Story,String> {
     List<Story> findByTitle(@Param("title") String title);
+    StoryDTO findByUuid(String uuid);
 
 }

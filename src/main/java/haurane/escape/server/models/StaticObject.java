@@ -6,6 +6,7 @@ import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
+import org.springframework.data.neo4j.core.support.UUIDStringGenerator;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -14,8 +15,8 @@ import java.util.Set;
 public class StaticObject {
 
     @Id
-    @GeneratedValue
-    private String id;
+    @GeneratedValue(generatorClass = UUIDStringGenerator.class)
+    private String uuid;
 
     @Getter
     @Setter
@@ -25,13 +26,23 @@ public class StaticObject {
     @Setter
     private String description;
 
+    @Getter
+    @Setter
+    private boolean isLocked;
+
+    @Getter
+    @Setter
+    private String[] combination;
+
     private StaticObject(){
         // Empty Constructor required by Neo4j API
     }
 
-    public StaticObject(String name, String description){
+    public StaticObject(String name, String description, boolean isLocked, String[] combination) {
         this.name = name;
         this.description = description;
+        this.isLocked = isLocked;
+        this.combination = combination;
     }
 
     @Relationship(type="holds", direction = Relationship.Direction.OUTGOING)
