@@ -1,4 +1,4 @@
-package haurane.escape.server.DTO;
+package haurane.escape.server.dto;
 
 import java.util.List;
 
@@ -11,5 +11,6 @@ public interface StoryDTO {
 
     interface StartingRoomID{
         String getUuid();
+        String getName();
     }
 }

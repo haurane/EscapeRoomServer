@@ -1,9 +1,6 @@
-package haurane.escape.server.DTO;
-
-import org.springframework.data.annotation.Id;
+package haurane.escape.server.dto;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface RoomDTO {
     String getDescription();
@@ -13,5 +10,6 @@ public interface RoomDTO {
 
     interface containsSummary{
         String getuuid();
+        String getName();
     }
 }

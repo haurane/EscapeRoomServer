@@ -1,4 +1,4 @@
-package haurane.escape.server.DTO;
+package haurane.escape.server.dto;
 
 import java.util.List;
 
@@ -8,9 +8,10 @@ public interface StaticObjectDTO {
     String getDescription();
     String getIsLocked();
     String[] getCombination();
-    List<HeldItemUuid> getHeldItems();
-    List<HeldItemUuid> getRequiredItems();
-    interface HeldItemUuid{
+    List<SOItems> getHeldItems();
+    List<SOItems> getRequiredItems();
+    interface SOItems {
         String getUuid();
+        String getName();
     }
 }

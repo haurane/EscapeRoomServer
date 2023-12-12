@@ -1,4 +1,4 @@
-package haurane.escape.server.DTO;
+package haurane.escape.server.dto;
 
 public interface ItemDTO {
     String getUuid();
