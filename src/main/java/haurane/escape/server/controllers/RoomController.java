@@ -1,26 +1,25 @@
 package haurane.escape.server.controllers;
 
 import haurane.escape.server.dto.RoomDTO;
-import haurane.escape.server.dto.StaticObjectDTO;
 import haurane.escape.server.repositories.RoomRepository;
-import org.springframework.data.repository.query.Param;
+import haurane.escape.server.services.RoomService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/rooms")
 public class RoomController {
-    private final RoomRepository roomRepository;
+    private final RoomService roomService;
 
-    public RoomController(RoomRepository repo){
-        this.roomRepository = repo;
+    @Autowired
+    public RoomController(RoomService service) {
+        this.roomService = service;
     }
 
     @GetMapping("/{id}")
-    public RoomDTO getRoomByUUid(@PathVariable("id") String id){
-        return roomRepository.findByUuid(id);
+    public RoomDTO getRoomByUUID(@PathVariable("id") String id) {
+        return roomService.getRoomByUUID(id);
     }
     /*
     @GetMapping("{id}/staticObjects")

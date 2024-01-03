@@ -6,8 +6,9 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ItemDTO {
+public class UnlockDTO {
     String uuid;
-    String name;
-    String description;
+    String[] combination;
+    ItemDTO[] items;
+
 }

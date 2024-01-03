@@ -1,16 +1,19 @@
 package haurane.escape.server.dto;
 
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-public interface StoryDTO {
-    String getUuid();
-    String getTitle();
-    String getDescription();
-    String getIntro();
-    List<StartingRoomID> getStartingRoom();
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class StoryDTO {
+    private String uuid;
+    private String title;
+    private String description;
+    private String intro;
+    private String startingRoomId;
 
-    interface StartingRoomID{
-        String getUuid();
-        String getName();
-    }
 }

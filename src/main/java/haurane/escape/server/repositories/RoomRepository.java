@@ -1,7 +1,6 @@
 package haurane.escape.server.repositories;
 
 import haurane.escape.server.dto.RoomDTO;
-import haurane.escape.server.dto.StaticObjectDTO;
 import haurane.escape.server.models.Room;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.neo4j.repository.query.Query;
@@ -14,13 +13,12 @@ import java.util.List;
 @Repository
 public interface RoomRepository extends Neo4jRepository<Room, String>, CrudRepository<Room, String> {
     //List<Room> findByName(@Param("name") String name);
-    RoomDTO findByUuid(@Param("uuid") String uuid);
+    Room findByuuid(@Param("uuid") String uuid);
+
     List<RoomDTO> findByName(@Param("name") String name);
 
-    /*
-    @Query("MATCH (R:Room{uuid:$id}) -[:contains]-> (s:StaticObject) return s")
-    List<StaticObjectDTO> getContainedObjects(@Param("id") String id);
-    */
+    @Query("MATCH (s:Story{uuid:$storyId}) -[:starts]-> (r:Room) return r")
+    Room getRoomsFromStory(@Param("storyId") String storyId);
 }
 
 
