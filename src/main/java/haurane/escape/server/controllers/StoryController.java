@@ -19,7 +19,6 @@ public class StoryController {
 
     @Autowired
     public StoryController(StoryService storyService) {
-
         this.storyService = storyService;
     }
 

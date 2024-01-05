@@ -11,7 +11,7 @@ import org.springframework.data.neo4j.core.support.UUIDStringGenerator;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Item {
+public class Item implements Summarizable {
     @Id
     @GeneratedValue(UUIDStringGenerator.class)
     private String uuid;

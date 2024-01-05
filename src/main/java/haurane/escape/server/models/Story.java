@@ -30,5 +30,5 @@ public class Story {
     }
 
     @Relationship(type = "starts", direction = Relationship.Direction.OUTGOING)
-    Room startingRoom;
+    private Room startingRoom;
 }

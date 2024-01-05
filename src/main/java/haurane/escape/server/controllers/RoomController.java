@@ -1,7 +1,6 @@
 package haurane.escape.server.controllers;
 
 import haurane.escape.server.dto.RoomDTO;
-import haurane.escape.server.repositories.RoomRepository;
 import haurane.escape.server.services.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +18,7 @@ public class RoomController {
 
     @GetMapping("/{id}")
     public RoomDTO getRoomByUUID(@PathVariable("id") String id) {
-        return roomService.getRoomByUUID(id);
+        return roomService.getByUUID(id);
     }
     /*
     @GetMapping("{id}/staticObjects")

@@ -4,9 +4,12 @@ import haurane.escape.server.dto.ItemDTO;
 import haurane.escape.server.dto.StaticObjectDTO;
 import haurane.escape.server.dto.UnlockDTO;
 import haurane.escape.server.services.StaticObjectService;
+import haurane.escape.server.services.impl.UnlockFailException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -24,7 +27,7 @@ public class StaticObjectController {
 
     @GetMapping("/{roomId}/contained")
     public List<StaticObjectDTO> getByRoomContaining(@PathVariable("roomId") String roomId) {
-        return staticObjectService.findByContainingRoom(roomId);
+        return staticObjectService.getByContainingRoom(roomId);
     }
 
     @GetMapping("/{id}")
@@ -34,6 +37,11 @@ public class StaticObjectController {
 
     @PostMapping("/{id}/unlock")
     public List<ItemDTO> unlockByUUID(@PathVariable("id") String id, @RequestBody UnlockDTO unlockDTO) {
-        return staticObjectService.unlockStaticObject(id, unlockDTO);
+        try {
+            return staticObjectService.unlockStaticObject(id, unlockDTO);
+        } catch (UnlockFailException exc) {
+            throw new ResponseStatusException(
+                    HttpStatus.UNPROCESSABLE_ENTITY, exc.getMessage(), exc);
+        }
     }
 }

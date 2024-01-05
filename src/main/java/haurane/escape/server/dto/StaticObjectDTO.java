@@ -5,12 +5,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 import java.util.Set;
 
 @Data
-@Builder
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 public class StaticObjectDTO {
@@ -18,15 +19,5 @@ public class StaticObjectDTO {
     private String name;
     private String description;
     private boolean isLocked;
-    private String[] combination;
-    private List<ItemDTO> heldItems;
-    private List<ItemDTO> requiredItems;
-
-    interface SOItems {
-        String getUuid();
-
-        String getName();
-    }
-
 }
 

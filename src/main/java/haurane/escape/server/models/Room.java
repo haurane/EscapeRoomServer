@@ -30,7 +30,7 @@ public class Room {
     }
 
     @Relationship(type = "contains", direction = Relationship.Direction.OUTGOING)
-    public Set<StaticObject> containedObjects;
+    private Set<StaticObject> containedObjects;
 
     public void roomContains(StaticObject object) {
         if (containedObjects == null) {

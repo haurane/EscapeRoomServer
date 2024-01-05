@@ -21,57 +21,84 @@ import java.util.Objects;
 @Service
 public class StaticObjectServiceImpl implements StaticObjectService {
     private final StaticObjectRepository staticObjectRepository;
-    private final ItemRepository itemRepository;
+
 
     Logger logger = LoggerFactory.getLogger(haurane.escape.server.services.StaticObjectService.class);
 
     @Autowired
-    public StaticObjectServiceImpl(StaticObjectRepository staticObjectRepository, ItemRepository itemRepository) {
+    public StaticObjectServiceImpl(StaticObjectRepository staticObjectRepository) {
         this.staticObjectRepository = staticObjectRepository;
-        this.itemRepository = itemRepository;
+
     }
 
+    // TODO: Error messages should be in an external file to support translation
     @Override
-    public List<ItemDTO> unlockStaticObject(String uuid, UnlockDTO unlockDTO) {
+    public List<ItemDTO> unlockStaticObject(String uuid, UnlockDTO unlockDTO) throws UnlockFailException {
         if (!Objects.equals(uuid, unlockDTO.getUuid())) {
-            throw new IllegalArgumentException("IDs do not match");
+            throw new UnlockFailException("IDs do not match");
         }
         StaticObject staticObject = staticObjectRepository.findByuuid(uuid);
         String[] combinations = staticObject.getCombination();
-        List<String> requiredItems = staticObject.getHeldItems()
+        List<String> requiredItems = staticObject.getRequiredItems()
                 .stream().map(Item::getUuid).toList();
-        List<String> heldItems = staticObject.getHeldItems()
-                .stream().map(Item::getUuid).toList();
+
+        // TODO: Maybe cover in tests
+
+        if (combinations.length != unlockDTO.getCombination().length) {
+            throw new UnlockFailException("Combination amount does not match\n"
+                    + (combinations.length < unlockDTO.getCombination().length ?
+                    "Too many combinations given in Answer" :
+                    "Too few combinations given in Answer"));
+        }
+
+        // TODO: Maybe cover in tests
+        if (requiredItems.size() != unlockDTO.getItems().length) {
+            throw new UnlockFailException("Item amount does not match\n"
+                    + (requiredItems.size() < unlockDTO.getItems().length ?
+                    "Too many items given in Answer" :
+                    "Too few items given in Answer"));
+        }
 
         for (String comb : combinations) {
             if (!Arrays.asList(unlockDTO.getCombination()).contains(comb)) {
-                throw new IllegalArgumentException("Combination not found " + comb);
+                throw new UnlockFailException("Combination not found " + comb);
             }
         }
 
         for (String itemId : requiredItems) {
             if (!Arrays.stream(unlockDTO.getItems()).map(ItemDTO::getUuid).toList().contains(itemId)) {
-                throw new IllegalArgumentException("Item not found " + itemId);
+                throw new UnlockFailException("Item not found " + itemId);
             }
         }
-        logger.debug("Yeah");
         List<ItemDTO> returnItems = new ArrayList<>();
-        for (String itemId : heldItems) {
-            // TODO: Map items to itemDTO
-            // returnItems.add(itemRepository.findByUUID(itemId));
+        for (Item item : staticObject.getHeldItems()) {
+            returnItems.add(DTOMapper.ItemToDTO(item));
         }
         return returnItems;
     }
 
     @Override
     public StaticObjectDTO getByUUID(String id) {
-        return DTOMapper.StaticObjectToDTO(staticObjectRepository.findByuuid(id));
+        StaticObject obj = staticObjectRepository.findByuuid(id);
+        if (obj.isLocked()) {
+            return DTOMapper.StaticObjectToDTO(obj);
+        } else {
+            return DTOMapper.StaticObjectToFullDTO(staticObjectRepository.findByuuid(id));
+        }
     }
 
     @Override
-    public List<StaticObjectDTO> findByContainingRoom(String roomId) {
-        return staticObjectRepository.findByContainingRoom(roomId).stream()
-                .map(DTOMapper::StaticObjectToDTO).toList();
+    public List<StaticObjectDTO> getByContainingRoom(String roomId) {
+        List<StaticObject> staticObjectList = staticObjectRepository.findByContainingRoom(roomId);
+        List<StaticObjectDTO> dtoList = new ArrayList<>();
+        for (StaticObject obj : staticObjectList) {
+            if (obj.isLocked()) {
+                dtoList.add(DTOMapper.StaticObjectToDTO(obj));
+            } else {
+                dtoList.add(DTOMapper.StaticObjectToFullDTO(obj));
+            }
+        }
+        return dtoList;
 
     }
 

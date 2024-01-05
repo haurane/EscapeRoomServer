@@ -17,7 +17,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public RoomDTO getRoomByUUID(String uuid) {
+    public RoomDTO getByUUID(String uuid) {
         return DTOMapper.RoomToDTO(roomRepository.findByuuid(uuid));
     }
 

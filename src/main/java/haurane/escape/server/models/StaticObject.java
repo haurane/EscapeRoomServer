@@ -1,5 +1,6 @@
 package haurane.escape.server.models;
 
+import haurane.escape.server.dto.Summary;
 import lombok.*;
 import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
@@ -8,6 +9,7 @@ import org.springframework.data.neo4j.core.schema.Relationship;
 import org.springframework.data.neo4j.core.support.UUIDStringGenerator;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Node
@@ -15,7 +17,7 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class StaticObject {
+public class StaticObject implements Summarizable {
 
     @Id
     @GeneratedValue(generatorClass = UUIDStringGenerator.class)
@@ -33,7 +35,7 @@ public class StaticObject {
     }
 
     @Relationship(type = "holds", direction = Relationship.Direction.OUTGOING)
-    public Set<Item> heldItems;
+    private Set<Item> heldItems = new HashSet<>();
 
     public void addHeldItem(Item item) {
         if (heldItems == null) {
@@ -43,7 +45,7 @@ public class StaticObject {
     }
 
     @Relationship(type = "requires", direction = Relationship.Direction.OUTGOING)
-    public Set<Item> requiredItems;
+    private Set<Item> requiredItems = new HashSet<>();
 
     public void addRequiredItem(Item item) {
         if (requiredItems == null) {
@@ -51,4 +53,5 @@ public class StaticObject {
         }
         requiredItems.add(item);
     }
+
 }
