@@ -39,9 +39,6 @@ public class StaticObjectServiceImpl implements StaticObjectService {
         }
         StaticObject staticObject = staticObjectRepository.findByuuid(uuid);
         String[] combinations = staticObject.getCombination();
-        if (combinations == null) {
-
-        }
         List<String> requiredItems = staticObject.getRequiredItems()
                 .stream().map(Item::getUuid).toList();
 
