@@ -19,6 +19,7 @@ public class DTOMapperTest {
     public void DTOMapperTest_StoryToDTO_ReturnDTO() {
         Room startingRoom = Room.builder().build();
         Story story = Story.builder()
+                .uuid("AAA")
                 .title("Test Story Title")
                 .intro("Test Story Intro")
                 .description("Test Story Description")
@@ -36,6 +37,7 @@ public class DTOMapperTest {
     @Test
     public void DTOMapper_ItemToDTO_ReturnDTO() {
         Item item = Item.builder()
+                .uuid("AAA")
                 .name("Test Item")
                 .description("Test Item Description")
                 .build();
@@ -50,6 +52,7 @@ public class DTOMapperTest {
     @Test
     public void DTOMapper_StaticObjectToDTO_ReturnDTO() {
         StaticObject staticObject = StaticObject.builder()
+                .uuid("AAA")
                 .name("Test Stat Obj")
                 .description("Test Stat Obj Description")
                 .combination(new String[]{"123"})
@@ -70,6 +73,7 @@ public class DTOMapperTest {
     @Test
     public void DTOMapper_StaticObjectToFullDTO_ReturnDTO() {
         StaticObject staticObject = StaticObject.builder()
+                .uuid("AAA")
                 .name("Test Stat Obj")
                 .description("Test Stat Obj Description")
                 .combination(new String[]{"123"})
@@ -93,6 +97,7 @@ public class DTOMapperTest {
     @Test
     public void DTOMapper_RoomToDTO_ReturnDTO() {
         Room room = Room.builder()
+                .uuid("AAA")
                 .name("Test Room")
                 .description("Test Room Description")
                 .containedObjects(Collections.singleton(StaticObject.builder().name("Test Room Contained Object").build()))

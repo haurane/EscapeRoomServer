@@ -7,6 +7,7 @@ import haurane.escape.server.models.*;
 public class DTOMapper {
     public static FullStaticObjectDTO StaticObjectToFullDTO(StaticObject object) {
         FullStaticObjectDTO dto = FullStaticObjectDTO.builder()
+                .uuid(object.getUuid())
                 .name(object.getName())
                 .description(object.getDescription())
                 .isLocked(object.isLocked())
@@ -17,6 +18,7 @@ public class DTOMapper {
 
     public static StaticObjectDTO StaticObjectToDTO(StaticObject object) {
         StaticObjectDTO dto = StaticObjectDTO.builder()
+                .uuid(object.getUuid())
                 .name(object.getName())
                 .description(object.getDescription())
                 .isLocked(object.isLocked())

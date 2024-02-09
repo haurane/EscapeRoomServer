@@ -25,7 +25,7 @@ public class StaticObject implements Summarizable {
     private String name;
     private String description;
     private boolean isLocked;
-    private String[] combination;
+    private String[] combination = new String[0];
 
     public StaticObject(String name, String description, boolean isLocked, String[] combination) {
         this.name = name;
